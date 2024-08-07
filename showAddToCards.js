@@ -1,11 +1,12 @@
 import products from "./api/products.json";
 import { fetchQuantityFromCartLS } from "./fetchQuantityFromCartLS";
 import { getCartProductFromLS } from "./getCartProductFromLS.JS";
+import { removeProductFromCart } from "./removeProductFromCart";
 
 let cartProducts = getCartProductFromLS();
 
 let filterProducts = products.filter((curProd) => {
-  return cartProducts.some((curElem) =>  curElem.id === curProd.id );
+  return cartProducts.some((curElem) => curElem.id === curProd.id);
 });
 console.log(filterProducts);
 
@@ -20,17 +21,18 @@ const showCartProducts = () => {
 
     let productClone = document.importNode(templateContainer.content, true);
 
-    const LSActualData=fetchQuantityFromCartLS(id,price);
-console.log(LSActualData);
+    const LSActualData = fetchQuantityFromCartLS(id, price);
+    console.log(LSActualData);
 
-    productClone.querySelector('#cardValue').setAttribute('id',`card${id}`);
-    productClone.querySelector('.productName').textContent=name;
-    productClone.querySelector('.category').textContent=category;
-    productClone.querySelector('.productImage').src=image;
+    productClone.querySelector('#cardValue').setAttribute('id', `card${id}`);
+    productClone.querySelector('.productName').textContent = name;
+    productClone.querySelector('.category').textContent = category;
+    productClone.querySelector('.productImage').src = image;
 
-    productClone.querySelector('.productQuantity').textContent=LSActualData.quantity;
-    productClone.querySelector('.productPrice').textContent=LSActualData.price;
+    productClone.querySelector('.productQuantity').textContent = LSActualData.quantity;
+    productClone.querySelector('.productPrice').textContent = LSActualData.price;
 
+    productClone.querySelector('.remove-to-cart-button').addEventListener('click', () => removeProductFromCart(id));
 
     cartElement.appendChild(productClone);
 
